@@ -31,7 +31,8 @@ import (
 	"strings"
 )
 
-func Minify(json string, stripSpace bool) (string, error) {
+func Minify(jsonBytes []byte, stripSpace bool) ([]byte, error) {
+	json := string(jsonBytes)
 	tokenizer := regexp.MustCompile(`"|(/\*)|(\*/)|(//)|\n|\r`)
 	whitespaceRx := regexp.MustCompile(`[ \t\n\r]*`)
 
@@ -82,5 +83,5 @@ func Minify(json string, stripSpace bool) (string, error) {
 		newStr = append(newStr, json[from:])
 	}
 
-	return strings.Join(newStr, ""), nil
+	return []byte(strings.Join(newStr, "")), nil
 }
